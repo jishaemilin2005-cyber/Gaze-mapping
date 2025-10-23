@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ESP32-CAM WebGazer Integration</title>
+  <script src="webgazer.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #imageContainer {
+      position: relative;
+      display: inline-block;
+    }
+    #webgazerGazeDot {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background-color: red;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+    }
+    #esp32cam {
+      display: block;
+      margin: 10px auto;
+      border: 2px solid #333;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>ESP32-CAM Eye Tracking</h2>
+
+  <!-- ESP32-CAM Stream -->
+  <video id="esp32cam"
+         src="http://192.168.113.211:81/stream"
+         width="640" height="480"
+         autoplay playsinline muted controls>
+  </video>
+
+  <div id="imageContainer">
+    <img id="currentImage" src="test.jpg" width="640" height="480">
+    <div id="webgazerGazeDot"></div>
+  </div>
+
+  <script>
+    let isPaused = false;
+    let gazeData = [];
+    let images = [document.getElementById("currentImage")];
+    let currentImageIndex = 0;
+
+    function initializeWebGazer() {
+      return new Promise((resolve, reject) => {
+        webgazer.params.applyKalmanFilter = true;
+        webgazer.params.showVideoPreview = false;
+        webgazer.params.showFaceOverlay = false;
+        webgazer.params.showFaceFeedbackBox = false;
+
+        webgazer.setGazeListener((data, elapsedTime) => {
+          if (!isPaused && data !== null) {
+            const gazeDotElement = document.querySelector('#webgazerGazeDot');
+            const imageContainer = document.getElementById('imageContainer');
+            const rect = imageContainer.getBoundingClientRect();
+
+            const relativeX = data.x - rect.left;
+            const relativeY = data.y - rect.top;
+
+            if (relativeX >= 0 && relativeY >= 0 && relativeX <= rect.width && relativeY <= rect.height) {
+              gazeDotElement.style.transform = `translate3d(${relativeX}px, ${relativeY}px, 0)`;
+            }
+
+            gazeData.push({
+              imagePath: currentImageIndex < images.length ? images[currentImageIndex].src : null,
+              transform: { x: relativeX, y: relativeY },
+              time: elapsedTime
+            });
+          }
+        }).begin();
+
+        // 👇 override WebGazer video with ESP32 stream
+        const esp32video = document.getElementById("esp32cam");
+        webgazer.videoElement = esp32video;
+
+        resolve();
+      });
+    }
+
+    // Start
+    window.onload = async function() {
+      await initializeWebGazer();
+      console.log("WebGazer initialized with ESP32-CAM feed");
+    };
+  </script>
+</body>
+</html>
