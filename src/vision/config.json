@@ -1,0 +1,25 @@
+{
+  "tracker": {
+    "use_clahe": true,
+    "clahe_clip": 2.0,
+    "clahe_tile": [8, 8],
+    "morph_open_iter": 1,
+    "morph_close_iter": 1,
+    "thresh_block": 15,
+    "thresh_c": 7,
+    "min_pupil_area": 80,
+    "smooth_window": 5,
+    "roi_half_size": 90
+  },
+  "capture": {
+    "source": "obs",
+    "resize_max_h": 720,
+    "horizontal_flip": true
+  },
+  "calibration": {
+    "screen_width": 1920,
+    "screen_height": 1080,
+    "sample_duration_sec": 2.0,
+    "target_margin": 200
+  }
+}

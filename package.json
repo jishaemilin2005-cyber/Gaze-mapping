@@ -1,0 +1,13 @@
+{
+  "name": "eye-tracking-study",
+  "version": "1.0.0",
+  "description": "Eye tracking study application with pupil-only calibration",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "test": "python3 test_tracker.py",
+    "build": "echo 'Build complete - static files ready'"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
