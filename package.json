@@ -4,7 +4,8 @@
   "description": "Eye tracking study application with pupil-only calibration",
   "main": "index.html",
   "scripts": {
-    "dev": "python3 -m http.server 8000",
+    "dev": "python3 server.py",
+    "start": "python3 server.py",
     "test": "python3 test_tracker.py",
     "build": "echo 'Build complete - static files ready'"
   },

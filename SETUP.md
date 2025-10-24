@@ -44,17 +44,45 @@ This will:
 
 ## Running the Web Application
 
-### Option 1: Simple HTTP Server (Python)
+### Option 1: Using npm (Recommended)
 
 ```bash
 npm run dev
 # or
-python3 -m http.server 8000
+npm start
 ```
 
-Then open: http://localhost:8000
+The server will:
+- Bind to `0.0.0.0` (accessible from any network interface)
+- Use the `PORT` environment variable (default: 8000)
+- Print the full external URL if running on Bolt
 
-### Option 2: Any Static Server
+**Example output:**
+```
+============================================================
+🌐 Eye Tracking System Server
+============================================================
+
+✅ Server running on 0.0.0.0:8000
+
+🔗 Open the app at: https://<workspace>-8000.bolt.run
+
+📄 Available pages:
+   • Home:    https://<workspace>-8000.bolt.run/index.html
+   • Study:   https://<workspace>-8000.bolt.run/study.html
+   • Demo:    https://<workspace>-8000.bolt.run/demo_tracker.html
+   • Results: https://<workspace>-8000.bolt.run/results.html
+
+============================================================
+```
+
+### Option 2: Custom Port
+
+```bash
+PORT=3000 npm run dev
+```
+
+### Option 3: Any Static Server
 
 The project is pure HTML/JS/CSS, so any static file server works:
 ```bash

@@ -2,27 +2,39 @@
 
 ## 🌐 Website Links
 
-**Local Server:** http://localhost:8000
+**Server:** Running on 0.0.0.0:8000 (binds to all interfaces)
+
+The server automatically detects if running on Bolt and prints the external URL.
 
 ### Available Pages
 
 1. **Home/Landing Page**
-   - URL: http://localhost:8000/index.html
+   - Path: `/index.html`
    - Description: Main entry point for the eye tracking study
 
 2. **Study Page** (Optimized with Image Preloader)
-   - URL: http://localhost:8000/study.html
+   - Path: `/study.html`
    - Description: Eye tracking study with fast image switching
    - Features: Preloaded images, instant switching, keyboard navigation
 
 3. **Demo/Documentation Page**
-   - URL: http://localhost:8000/demo_tracker.html
+   - Path: `/demo_tracker.html`
    - Description: Feature showcase and technical overview
    - Highlights: Performance metrics, architecture, quick start guide
 
 4. **Results Page**
-   - URL: http://localhost:8000/results.html
+   - Path: `/results.html`
    - Description: View study results and data
+
+### Access URLs
+
+**Local:**
+- http://localhost:8000
+
+**Bolt (when deployed):**
+- https://\<workspace\>-8000.bolt.run
+
+The server automatically prints the correct URL when started with `npm run dev`.
 
 ## 📂 Project Structure
 
